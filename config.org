@@ -16,6 +16,7 @@
 (add-hook 'window-setup-hook #'toggle-frame-maximized)
 (setq display-line-numbers-type 'relative)
 (setq org-directory "~/org/")
+(setq-default tab-width 2)
 ;; Save automatically
 (setq auto-save-default t)
 #+end_src
