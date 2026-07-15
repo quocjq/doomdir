@@ -46,6 +46,10 @@
    (t
     (ignore-errors (sp-up-sexp)))))
 (map! :i "TAB" #'my/tabout)
+
+
+(map! :leader
+        :desc "Toggle nix-eshell"       "n"  #'nix-eshell)
 #+end_src
 
 
