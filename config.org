@@ -6,6 +6,7 @@
   - [[#transparency][Transparency]]
 - [[#keybind][Keybind]]
   - [[#tabout][Tabout]]
+  - [[#toggle][Toggle]]
 - [[#orgmode][Orgmode]]
   - [[#orgmodern][Orgmodern]]
 
@@ -18,7 +19,8 @@
 (setq org-directory "~/org/")
 (setq-default tab-width 2)
 ;; Save automatically
-(setq auto-save-default t)
+(setq auto-save-default nil)
+(setq fido-mode t)
 #+end_src
 * Appearance
 ** Splash Screen
@@ -46,12 +48,13 @@
    (t
     (ignore-errors (sp-up-sexp)))))
 (map! :i "TAB" #'my/tabout)
+#+end_src
 
-
+** Toggle
+#+begin_src emacs-lisp
 (map! :leader
         :desc "Toggle nix-eshell"       "n"  #'nix-eshell)
 #+end_src
-
 
 * Orgmode
 
