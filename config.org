@@ -16,7 +16,7 @@
 (setq doom-font (font-spec :family "JetBrainsMono Nerd Font" :size 20 :weight 'medium))
 (add-hook 'window-setup-hook #'toggle-frame-maximized)
 (setq display-line-numbers-type 'relative)
-(setq org-directory "~/org/")
+(setq org-directory "~/Org/")
 (setq-default tab-width 2)
 ;; Save automatically
 (setq auto-save-default nil)
