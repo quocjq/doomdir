@@ -27,11 +27,27 @@
 * Appearance
 ** Splash Screen
 #+begin_src emacs-lisp
-(remove-hook! '+doom-dashboard-functions
-  #'doom-dashboard-widget-shortmenu
-  #'doom-dashboard-widget-footer)
+;; Setup custom splashscreen
+(remove-hook '+doom-dashboard-functions #'doom-dashboard-widget-shortmenu)
 (add-hook! '+doom-dashboard-functions :append
   (insert "\n" (+doom-dashboard--center +doom-dashboard--width "Welcome Home, Lunixose.")))
+(defun my/doom-dashboard-banner ()
+  (let* ((banner '(
+                    "█     █   █ █   █ ███ █   █  ███   ████ █████  "
+                    "█░    █░  █░██  █░ █░░ █ █ ░█ ░░█ █ ░░░░█░░░░░ "
+                    "█░░   █░░ █░█░█ █░░█░░░ █ ░ █░ ░█░ ███░░████░░░"
+                    "█░░   █░░ █░█░░██░░█░░ █ █ ░█░░ █░░ ░░█ █░░░░  "
+                    "█████  ███ ░█░░ █░███░█ ░ █  ███ ░████░░█████░ "
+                    " ░░░░░  ░░░ ░░░  ░░░░░ ░ ░ ░  ░░░ ░░░░░ ░░░░░░ "
+                    "  ░░░░░  ░░░  ░   ░ ░░░ ░   ░  ░░░  ░░░░  ░░░░░"
+                   ))
+         (longest (apply #'max (mapcar #'length banner))))
+    (mapc (lambda (line)
+            (insert (make-string (max 0 (/ (- 80 longest) 2)) ? )
+                    (propertize line 'face 'doom-dashboard-banner)
+                    "\n"))
+          banner)))
+(setq +doom-dashboard-ascii-banner-fn #'my/doom-dashboard-banner)
 #+end_src
 ** Transparency
 #+begin_src emacs-lisp
@@ -60,8 +76,7 @@
         :desc "Toggle nix-eshell"       "n"     #'nix-eshell
         :desc "Toggle dirvish"          "o /"   #'dirvish
         :desc "Toggle vterm"            "v t"   #'vterm/toggle
-        :desc "New vterm"               "v n"   #'vterm/here
-        :desc "New proeject vtern"      "v p"   #'projectile-run-vterm)
+        :desc "New vterm"               "v n"   #'vterm/here)
 #+end_src
 
 * Orgmode
