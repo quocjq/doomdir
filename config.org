@@ -57,7 +57,11 @@
 ** Toggle
 #+begin_src emacs-lisp
 (map! :leader
-        :desc "Toggle nix-eshell"       "n"  #'nix-eshell)
+        :desc "Toggle nix-eshell"       "n"     #'nix-eshell
+        :desc "Toggle dirvish"          "o /"   #'dirvish
+        :desc "Toggle vterm"            "v t"   #'vterm/toggle
+        :desc "New vterm"               "v n"   #'vterm/here
+        :desc "New proeject vtern"      "v p"   #'projectile-run-vterm)
 #+end_src
 
 * Orgmode
