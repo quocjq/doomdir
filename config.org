@@ -25,6 +25,8 @@
   (fido-mode 1))
 (global-auto-revert-mode 1)
 (setq global-auto-revert-non-file-buffers t)
+(defadvice! prompt-for-buffer (&rest _)
+  :after 'window-split (switch-to-buffer))
 #+end_src
 * Appearance
 ** Splash Screen
