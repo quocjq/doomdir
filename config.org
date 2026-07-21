@@ -548,6 +548,11 @@ column for prose and let previews scale with the buffer font.
 (defvar nb/current-line '(0 . 0)
    "(start . end) of current line in current buffer")
  (make-variable-buffer-local 'nb/current-line)
+ (defun nb/markdown-unhide-table (limit)
+   (when (re-search-forward "^[ \t]*|.*$" limit t)
+     (remove-text-properties (match-beginning 0) (match-end 0)
+                     '(invisible t display "" composition ""))
+     t))
 
  (defun nb/unhide-current-line (limit)
    "Font-lock function"
@@ -572,7 +577,8 @@ column for prose and let previews scale with the buffer font.
    "Enable markdown concealling"
    (interactive)
    (markdown-toggle-markup-hiding 'toggle)
-   (font-lock-add-keywords nil '((nb/unhide-current-line)) t)
+   (font-lock-add-keywords nil '((nb/unhide-current-line)
+                                 (nb/markdown-unhide-table)) t)
    (add-hook 'post-command-hook #'nb/refontify-on-linemove nil t))
 
  (add-hook 'markdown-mode-hook #'nb/markdown-unhighlight)
