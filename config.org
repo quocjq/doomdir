@@ -9,11 +9,6 @@ handles that tangling automatically on save — so there is no need for
 Doom modules block sends it to =init.el=, package declarations carry
 =:tangle packages.el=, and every other block tangles to =config.el=.
 
-Package declarations live right above the configuration that uses
-them, rather than in a separate =packages.el=. That file is now a
-generated artifact (like =init.el= and =config.el=) and isn't tracked
-in git — run =doom sync= after adding or removing a =package!= block.
-
 * Table of Content :toc:
 - [[#doom-modules][Doom modules]]
 - [[#personal-information][Personal Information]]
@@ -64,6 +59,7 @@ in git — run =doom sync= after adding or removing a =package!= block.
   - [[#header-anchors][Header anchors]]
   - [[#link-previews][Link previews]]
   - [[#latex-rendering][LaTeX Rendering]]
+- [[#other-packages][Other Packages]]
 
 * Doom modules
 This block tangles to =init.el=
@@ -995,7 +991,6 @@ opens it. =websocket= is its runtime dependency.
     (browse-url-xdg-open (format "http://localhost:%d" org-roam-ui-port))))
 #+end_src
 
-
 * HTML Export
 
 I want to tweak a whole bunch of things. While I'll want my tweaks almost all
@@ -1786,7 +1781,6 @@ are part of my LaTeX preamble.
   src=\"%PATH\">
 </script>")
 #+end_src
-
 
 * Other Packages
 These packages are installed but not yet configured — their
