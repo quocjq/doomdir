@@ -5,8 +5,14 @@ This is a [[https://en.wikipedia.org/wiki/Literate_programming][literate]] Doom 
 together, and the code blocks below are extracted ("tangled") into the
 =.el= files Emacs actually loads. Doom's =:config literate= module
 handles that tangling automatically on save — so there is no need for
-=org-auto-tangle=. The =:tangle init.el= header on the Doom modules
-block sends it to =init.el=; every other block tangles to =config.el=.
+=org-auto-tangle=. Blocks are routed by their =:tangle= header: the
+Doom modules block sends it to =init.el=, package declarations carry
+=:tangle packages.el=, and every other block tangles to =config.el=.
+
+Package declarations live right above the configuration that uses
+them, rather than in a separate =packages.el=. That file is now a
+generated artifact (like =init.el= and =config.el=) and isn't tracked
+in git — run =doom sync= after adding or removing a =package!= block.
 
 * Table of Content :toc:
 - [[#doom-modules][Doom modules]]
@@ -548,6 +554,10 @@ beside source blocks, and give TODO/DONE labels pill-shaped faces —
 the visual polish tecosaur is known for, without the custom SVG
 machinery.
 
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-modern)
+#+end_src
+
 #+begin_src emacs-lisp
 (after! org
   (setq org-modern-star 'replace                 ; swap heading asterisks for bullets
@@ -659,8 +669,11 @@ after Doom sets up Org appearance so the substitutions stick.
 With =org-hide-emphasis-markers= on (above), the =/slashes/= and
 =*stars*= around emphasized text are hidden — nice to read, awkward to
 edit. =org-appear= restores them automatically whenever the cursor
-enters the emphasized region, so editing stays easy. The package is
-already declared in =packages.el=.
+enters the emphasized region, so editing stays easy.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-appear)
+#+end_src
 
 #+begin_src emacs-lisp
 (use-package! org-appear
@@ -829,10 +842,14 @@ when tangled.
 #+end_src
 
 * Agenda
-tecosaur's souped-up agenda, built on =org-super-agenda=. The package
-is declared in =packages.el=. This groups the =alltodo= view by tag,
-priority, and deadline so a single =SPC o A o= "Overview" gives you
-Today's time-grid plus everything else bucketed sensibly.
+tecosaur's souped-up agenda, built on =org-super-agenda=. This groups
+the =alltodo= view by tag, priority, and deadline so a single =SPC o A
+o= "Overview" gives you Today's time-grid plus everything else bucketed
+sensibly.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-super-agenda)
+#+end_src
 
 #+begin_src emacs-lisp
 (use-package! org-super-agenda
@@ -918,14 +935,17 @@ stays focused on real work.
 
 * Roam
 =org-roam= for networked note-taking, with tecosaur's modeline tweak
-and the =org-roam-ui= graph view. All three packages (=org-roam=,
-=org-roam-ui=, =websocket=) are already declared in =packages.el=.
+and the =org-roam-ui= graph view.
 
 ** Basic settings
 Point roam at a directory under your =org-directory=. Unlike
 tecosaur's hardcoded path, this derives from =org-directory= so it
 tracks wherever your Org files live. The directory is created on first
 use.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-roam)
+#+end_src
 
 #+begin_src emacs-lisp
 (setq org-roam-directory (expand-file-name "roam" org-directory))
@@ -951,7 +971,12 @@ other buffer untouched.
 ** Graph view
 =org-roam-ui= serves an interactive graph of your notes in the
 browser. =SPC n r u= (or =M-x org-roam-ui-open=) starts the server and
-opens it.
+opens it. =websocket= is its runtime dependency.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! org-roam-ui)
+(package! websocket)
+#+end_src
 
 #+begin_src emacs-lisp
 (use-package! websocket
@@ -1762,3 +1787,21 @@ are part of my LaTeX preamble.
 </script>")
 #+end_src
 
+
+* Other Packages
+These packages are installed but not yet configured — their
+declarations live here so nothing gets lost. Move each =package!= up
+next to a real configuration block when you set the package up.
+
+=theme-magic= applies your Emacs theme to the rest of your Linux TTY /
+X colours. =svg-tag-mode= renders tags and keywords as SVG labels.
+=doct= is a declarative syntax for =org-capture-templates= (the
+Capture section above could be rewritten with it). =org-noter= links
+notes to PDF/EPUB positions for annotated reading.
+
+#+begin_src emacs-lisp :tangle packages.el
+(package! theme-magic)
+(package! svg-tag-mode)
+(package! doct)
+(package! org-noter)
+#+end_src
