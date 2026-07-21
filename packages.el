@@ -56,6 +56,7 @@
 (package! svg-tag-mode)
 (package! websocket)
 (package! org-appear)
+(package! org-super-agenda)
 (package! org-roam)
 (package! org-roam-ui)
 (package! org-noter)
